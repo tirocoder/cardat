@@ -1,0 +1,144 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using Vehicle;
+
+namespace CarDat_v0
+{
+    public partial class Form1 : Form
+    {
+        //START constants for showing preview data
+        const int LEFT = 20;            //distance from left column to left border of application
+        const int TOP = 200;            //distance from top row to top border of application
+        const int PICS_IN_ROW = 3;      //amount of displayed pics in a row
+        const int PPIC_WIDTH = 150;     //width of created PictureBox
+        const int PPIC_HEIGHT = 140;    //height of created PictureBox
+        const int HORI_DIST = 10;       //horizontal distance between two PictureBoxes
+        const int VERI_DIST = 20;       //vertical distance between two PictureBoxes
+        //END constants for showing preview data
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_addcar_Click(object sender, EventArgs e)
+        {
+            CarDat_v0.Form2 frm_addcar = new Form2();
+            frm_addcar.ShowDialog();
+        }
+
+
+        string text_from_file = "";
+        int path_counter = 0;
+        string[] path_of_cars = new string[1000];
+        PictureBox[] pb_for_ppics = new PictureBox[100];    //
+        
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            int nr_of_ppics = 0;                                //
+            int x_pos = 0;                                      //for viewing preview pics of saved cars
+            int y_pos = TOP;                                    //
+            int i_preview = 0;                                  //
+            
+
+            StreamReader textfile = new StreamReader("c:\\programdata.txt", Encoding.Default);  //
+            text_from_file = textfile.ReadToEnd();                                              //opens and reads the textfile that contains the .car-file names
+            textfile.Close();                                                                   //
+
+            path_of_cars = text_from_file.Split('\n');              //writes the path of saved .car-files into "path_of_cars"
+            path_counter = path_of_cars.Length;                     //gets the amount of saved .car-files
+
+            Vehicle.Car loaded_car = new Car();                     //creates a new car-object
+  
+            string car_name;                                        //the "real" car name
+            string[] car_name2 = new string[1];                     //gets the splitted value from "path_of_cars"
+
+            for (int i = 0; i < path_counter; i++)
+            {
+                car_name2 = path_of_cars[i].Split('\r');            //"path_of_cars" is splitted...
+                car_name = car_name2[0];                            //...and "car_name" gets the "real" car name
+                if (car_name != "")                                 //if "car_name" isn't empty...
+                {
+                    loaded_car = loaded_car.LoadCar(car_name);      //...a car gets loaded
+                    if(loaded_car._previewpic!=null)                //if the loaded car has a preview pic...
+                    {                                               //...the preview pic is shown
+                        //start "showing pictures on preview page"
+
+                        if ((i_preview % PICS_IN_ROW == 0) && (i_preview != 0))
+                        {
+                            y_pos += PPIC_HEIGHT + VERI_DIST;
+                            i_preview = 0;
+                        }
+                        x_pos = LEFT + i_preview * (PPIC_WIDTH + HORI_DIST);
+
+                        pb_for_ppics[nr_of_ppics] = new PictureBox();
+
+                        pb_for_ppics[nr_of_ppics].Location = new System.Drawing.Point(x_pos,y_pos);
+                        pb_for_ppics[nr_of_ppics].Name = "pb_for_ppics" + nr_of_ppics;
+                        pb_for_ppics[nr_of_ppics].Size = new System.Drawing.Size(PPIC_WIDTH, PPIC_HEIGHT);
+                        pb_for_ppics[nr_of_ppics].TabIndex = 20 + nr_of_ppics;
+                        pb_for_ppics[nr_of_ppics].BackgroundImageLayout = ImageLayout.Zoom;
+                        pb_for_ppics[nr_of_ppics].BackgroundImage = loaded_car._previewpic;
+
+                        //Controls.Add(pb_for_ppics[nr_of_ppics]);
+                        panel1.Controls.Add(pb_for_ppics[nr_of_ppics]);
+                        nr_of_ppics++;
+                        i_preview++;
+                        //end "showing pictures on preview page"
+                    }
+                }
+                else continue;
+            }
+        }
+
+        private void btn_showcars_Click(object sender, EventArgs e)
+        {
+            CarDat_v0.Form3 frm_showcars = new Form3();
+            frm_showcars.ShowDialog();
+        }
+
+        private void btn_delcar_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btn_help_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("CarDat v0   © Thomas Tisch 2010 - 2011", "Über...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void toolstripbutton_addcar_Click(object sender, EventArgs e)
+        {
+            CarDat_v0.Form2 frm_addcar = new Form2();
+            frm_addcar.ShowDialog();
+        }
+
+        private void toolstripbutton_showcars_Click(object sender, EventArgs e)
+        {
+            CarDat_v0.Form3 frm_showcars = new Form3();
+            frm_showcars.ShowDialog();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            panel1.ScrollControlIntoView(pb_for_ppics[4]);
+        }
+    }
+}
