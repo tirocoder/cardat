@@ -1,0 +1,10 @@
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\bin\Debug\VaC.dll
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\bin\Debug\VaC.pdb
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\obj\Debug\VaC.dll
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\obj\Debug\VaC.pdb
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\bin\Release\VaC.dll
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\bin\Release\VaC.pdb
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\obj\Release\VaC.dll
+C:\Users\Thomas\Projekte\C#\CarDat v0\Libraries\VaC\VaC\obj\Release\VaC.pdb
